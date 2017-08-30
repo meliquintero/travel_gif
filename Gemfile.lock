@@ -49,6 +49,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     debug_inspector (0.0.3)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -58,6 +60,9 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashie (3.4.4)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.8.6)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -131,6 +136,7 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rdoc (4.3.0)
+    safe_yaml (1.0.4)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -177,6 +183,8 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  crack
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-google-oauth2
