@@ -9,9 +9,6 @@ class PicasaAPIWrapper
   def initialize(data)
     @raw = data
     @classOfData = data.class
-    #@food_id = data["suggestions"]["food_id"]
-    # @music_id = data["suggestions"]["music_id"]
-    # @music_type = data["suggestions"]["music_type"]
   end
 
   def self.fetch(user_uid)
