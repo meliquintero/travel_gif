@@ -46,7 +46,7 @@ apiCall = Google::Apis::DriveV3::DriveService.new
 apiCall.client_options.application_name = APPLICATION_NAME
 apiCall.authorization = authorize
 # List the 1000 most recently modified files.
-response = apiCall.list_files(page_size: 1000,
+response = apiCall.list_files(page_size: 10,
                               fields: 'nextPageToken, files(id, name, kind, mime_type)',
                               q: "mimeType='image/gif'",
                               spaces: 'photos'
@@ -60,4 +60,11 @@ response.files.each do |file|
   #puts file.inspect
   #puts
   puts "#{file.name} (#{file.id}) (#{file.kind}) ((#{file.mime_type}))"
+
+  puts "================="
+  aFile = apiCall.get_file(file.id,
+                            {fields: 'id, name, kind, mime_type, thumbnailLink, webContentLink, webViewLink'}
+                          )
+  puts aFile.inspect
+  puts "==========="
 end
