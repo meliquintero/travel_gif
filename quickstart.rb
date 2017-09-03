@@ -24,13 +24,11 @@ def authorize
 
   client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
   token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
-  authorizer = Google::Auth::UserAuthorizer.new(
-    client_id, SCOPE, token_store)
+  authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
   user_id = 'default'
   credentials = authorizer.get_credentials(user_id)
   if credentials.nil?
-    url = authorizer.get_authorization_url(
-      base_url: OOB_URI)
+    url = authorizer.get_authorization_url(base_url: OOB_URI)
     puts "Open the following URL in the browser and enter the " +
          "resulting code after authorization"
     puts url
@@ -45,7 +43,7 @@ end
 apiCall = Google::Apis::DriveV3::DriveService.new
 apiCall.client_options.application_name = APPLICATION_NAME
 apiCall.authorization = authorize
-# List the 1000 most recently modified files.
+# List the most recently modified GIF files.
 response = apiCall.list_files(page_size: 10,
                               fields: 'nextPageToken, files(id, name, kind, mime_type)',
                               q: "mimeType='image/gif'",
@@ -53,18 +51,60 @@ response = apiCall.list_files(page_size: 10,
                               )
 
 
-
+# Display output
 puts 'Files:'
 puts 'No files found' if response.files.empty?
-response.files.each do |file|
-  #puts file.inspect
-  #puts
-  puts "#{file.name} (#{file.id}) (#{file.kind}) ((#{file.mime_type}))"
 
-  puts "================="
+response.files.each do |file|
+
+  #puts file.inspect
+  #puts "#{file.name} (#{file.id}) (#{file.mime_type})"
+  puts ""
   aFile = apiCall.get_file(file.id,
-                            {fields: 'id, name, kind, mime_type, thumbnailLink, webContentLink, webViewLink'}
+                            {fields: 'id, name, mimeType, thumbnailLink, webViewLink, webContentLink, createdTime, ownedByMe, size, imageMediaMetadata'}
                           )
-  puts aFile.inspect
-  puts "==========="
+
+
+
+  puts "File: #{aFile.name}"
+  puts "ID: #{aFile.id}"
+  puts "Created: #{aFile.created_time}"
+  puts "View: #{aFile.web_view_link}"
+  puts "Download: #{aFile.web_content_link}"
+  puts "Thumbnail #{aFile.thumbnail_link}"
+  puts "Mine: #{aFile.owned_by_me}"
+  puts "Dimensions: #{aFile.image_media_metadata.width}x#{aFile.image_media_metadata.height}"
+  puts "Size: #{aFile.size}bytes"
+  if aFile.image_media_metadata.location != nil
+    puts "Loc: #{aFile.image_media_metadata.location.latitude}, #{aFile.image_media_metadata.location.longitude}"
+  else
+    puts "Loc: 0, 0"
+  end
+
+  #puts aFile.inspect
 end
+
+# note: I don't think exporting of gifs works. :(
+#exportFile = apiCall.export_file("1hqnXJsVTSgv3H2gsFoyUVKLQTNiaBcOD8Q", "image/gif")
+
+
+
+## TODO
+#1 Save a copy of gif file (maybe via cUrl?) to gifs.travel server using webContentLink
+  # Windows PowerShell example => Invoke-WebRequest 'https://drive.google.com/uc?id=0B2tqn9-EHK-ZU3ZOWmc1dHR6OFU&export=download' -OutFile test-ANIMATION.gif
+#3 Write to an RSS file (XML) the properties of each new gif
+  # read existing RSS file off server
+  # parse RSS to get pubDate from channel > item[0]
+  # convert pubDate to date
+  # loop through 1000 most recent gifs with Drive.API call {note: that initially need to run through ALL results (not just top 1000)}
+  # if gif.created_time > pubDate then add new item node to rss for each new gif with all metadata
+
+  # IMPORTANT: Ignore all files if ownedByMe = false
+
+#4 schedule job to run periodically
+#5 build a web template XMLNS file to display HTML from RSS/XML file. Display 10 gifs per page.
+# future features: user voting of gifs. social share links. UI to sort display based on ratings or most recent
+
+## To-Test
+# Make sure non-saved gifs don't get published
+# Test ability to revoke certain select gifs (just delete from initial RSS?)
