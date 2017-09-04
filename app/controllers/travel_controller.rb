@@ -1,7 +1,9 @@
 require "#{Rails.root}/lib/PicasaAPIWrapper.rb"
+require "#{Rails.root}/lib/DriveAPIWrapper.rb"
 
 class TravelController < ApplicationController
   def index
+    @arrayOfGifs = DriveAPIWrapper.fetch
   end
 
   def show
