@@ -92,7 +92,7 @@ end
 ## TODO
 #1 Save a copy of gif file (maybe via cUrl?) to gifs.travel server using webContentLink
   # Windows PowerShell example => Invoke-WebRequest 'https://drive.google.com/uc?id=0B2tqn9-EHK-ZU3ZOWmc1dHR6OFU&export=download' -OutFile test-ANIMATION.gif
-#3 Write to an RSS file (XML) the properties of each new gif
+#3 Write to an RSS file (XML) the properties of each new gif (use: nokogiri.org)
   # read existing RSS file off server
   # parse RSS to get pubDate from channel > item[0]
   # convert pubDate to date
