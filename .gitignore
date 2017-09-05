@@ -16,4 +16,9 @@
 !/log/.keep
 /tmp
 .env
-.client_secret.json
+
+client_secret.json.melissa
+sample_rss.xml
+sample_rss_04.xml
+sample_rss_05.xml
+client_secret.json
