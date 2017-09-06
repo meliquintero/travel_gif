@@ -29,6 +29,7 @@ gem 'crack'
 gem 'google-api-client'
 gem 'googleauth'
 gem 'dotenv-rails'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

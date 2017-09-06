@@ -8,7 +8,7 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
 APPLICATION_NAME = 'Drive API Ruby Quickstart'
 CLIENT_SECRETS_PATH = 'client_secret.json'
 CREDENTIALS_PATH = File.join(Dir.home, '.credentials',
-                             "drive-ruby-quickstart.yaml")
+                             "drive-ruby-chongo_project.yaml")
 # SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_METADATA_READONLY
 # See: https://developers.google.com/identity/protocols/googlescopes
 SCOPE = "https://www.googleapis.com/auth/drive.photos.readonly"
