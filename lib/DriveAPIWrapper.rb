@@ -7,11 +7,11 @@ require 'fileutils'
 OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
 APPLICATION_NAME = 'Gif Travel'
 CLIENT_SECRETS_PATH = 'client_secret.json'
-CREDENTIALS_PATH = File.join(Dir.home, '.credentials',
-                             "drive-ruby-quickstart.yaml")
+CREDENTIALS_PATH = File.join(Dir.home, ENV["MY_CREDENTIALS_PATH"],
+                             "drive-ruby-chongo_project.yaml")
 # SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_METADATA_READONLY
 # See: https://developers.google.com/identity/protocols/googlescopes
-SCOPE = "https://www.googleapis.com/auth/drive.photos.readonly"
+SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_PHOTOS_READONLY
 
 ##
 # Ensure valid credentials, either by restoring from the saved credentials
@@ -40,12 +40,12 @@ class DriveAPIWrapper
   def self.authorize
     # @return [Google::Auth::UserRefreshCredentials] OAuth2 credentials
     FileUtils.mkdir_p(File.dirname(CREDENTIALS_PATH))
-
     client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
     token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
     authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
     user_id = 'default'
     credentials = authorizer.get_credentials(user_id)
+
     if credentials.nil?
       url = authorizer.get_authorization_url(base_url: OOB_URI)
       puts "Open the following URL in the browser and enter the " +
@@ -65,7 +65,7 @@ class DriveAPIWrapper
     apiCall.client_options.application_name = APPLICATION_NAME
     apiCall.authorization = authorize
     # List the most recently modified GIF files.
-    response = apiCall.list_files(page_size: 10,
+    response = apiCall.list_files(page_size: 2,
                                   fields: 'nextPageToken, files(id, name, kind, mime_type)',
                                   q: "mimeType='image/gif'",
                                   spaces: 'photos'
@@ -98,6 +98,7 @@ class DriveAPIWrapper
   end
 end
 
+##TO DO
 #1 Save a copy of gif file (maybe via cUrl?) to gifs.travel server using webContentLink
   # Windows PowerShell example => Invoke-WebRequest 'https://drive.google.com/uc?id=0B2tqn9-EHK-ZU3ZOWmc1dHR6OFU&export=download' -OutFile test-ANIMATION.gif
 #3 Write to an RSS file (XML) the properties of each new gif

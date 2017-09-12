@@ -8,6 +8,7 @@ class TravelController < ApplicationController
 
   def show
     @auth_hash = request.env['omniauth.auth']
+    print "auth_hash=====>", @auth_hash
     @picasa_data = PicasaAPIWrapper.fetch(@auth_hash["uid"])
   end
 end
