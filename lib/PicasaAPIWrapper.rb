@@ -1,3 +1,5 @@
+#should we detele this?
+
 require 'httparty'
 require 'crack' # for xml and json
 require 'crack/json' # for just json

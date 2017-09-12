@@ -3,6 +3,7 @@ require "#{Rails.root}/lib/DriveAPIWrapper.rb"
 
 class TravelController < ApplicationController
   def index
+    # very cool
     @arrayOfGifs = DriveAPIWrapper.fetch
   end
 
