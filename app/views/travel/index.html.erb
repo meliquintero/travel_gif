@@ -1,5 +1,7 @@
-<h1>Travel#index</h1>
-
+<div class="row">
 <% @arrayOfGifs.each do |gif| %>
-  <%= image_tag("#{gif.view}?key=" + ENV["GOOGLE_KEY"]) %>
+  <div class="col-xs-6 col-md-3">
+    <%= link_to image_tag("https://drive.google.com/uc?export=view&id=#{gif.id}"), gif.download, class:"thumbnail" %>
+  </div>
 <% end %>
+</div>

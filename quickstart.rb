@@ -8,7 +8,7 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
 APPLICATION_NAME = 'Drive API Ruby Quickstart'
 CLIENT_SECRETS_PATH = 'client_secret.json'
 CREDENTIALS_PATH = File.join(Dir.home, '.credentials',
-                             "drive-ruby-quickstart.yaml")
+                             "drive-ruby-chongo_project.yaml")
 # SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_METADATA_READONLY
 # See: https://developers.google.com/identity/protocols/googlescopes
 SCOPE = "https://www.googleapis.com/auth/drive.photos.readonly"
@@ -92,7 +92,7 @@ end
 ## TODO
 #1 Save a copy of gif file (maybe via cUrl?) to gifs.travel server using webContentLink
   # Windows PowerShell example => Invoke-WebRequest 'https://drive.google.com/uc?id=0B2tqn9-EHK-ZU3ZOWmc1dHR6OFU&export=download' -OutFile test-ANIMATION.gif
-#3 Write to an RSS file (XML) the properties of each new gif
+#3 Write to an RSS file (XML) the properties of each new gif (use: nokogiri.org)
   # read existing RSS file off server
   # parse RSS to get pubDate from channel > item[0]
   # convert pubDate to date

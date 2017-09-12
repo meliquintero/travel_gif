@@ -34,6 +34,7 @@ class DriveAPIWrapper
     if aFile.image_media_metadata.location != nil
       @latitude = aFile.image_media_metadata.location.latitude
       @longitude = aFile.image_media_metadata.location.longitude
+    end
   end
 
   def self.authorize
@@ -70,9 +71,6 @@ class DriveAPIWrapper
                                   spaces: 'photos'
                                   )
 
-
-    # Display output
-    puts 'Files:'
     puts 'No files found' if response.files.empty?
 
     response.files.map do |file|
@@ -99,12 +97,7 @@ class DriveAPIWrapper
     end
   end
 end
-# note: I don't think exporting of gifs works. :(
-#exportFile = apiCall.export_file("1hqnXJsVTSgv3H2gsFoyUVKLQTNiaBcOD8Q", "image/gif")
 
-
-
-## TODO
 #1 Save a copy of gif file (maybe via cUrl?) to gifs.travel server using webContentLink
   # Windows PowerShell example => Invoke-WebRequest 'https://drive.google.com/uc?id=0B2tqn9-EHK-ZU3ZOWmc1dHR6OFU&export=download' -OutFile test-ANIMATION.gif
 #3 Write to an RSS file (XML) the properties of each new gif
