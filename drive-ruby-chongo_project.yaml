@@ -1,2 +1,3 @@
-Client ID: 232381418731-1fco43q3uq7tn53fs5c0kcn3dclpb88m.apps.googleusercontent.com
-Client secret: TBRKOB5p4OhMCJ_NR035J4J4
+---
+melissajimison: '{"client_id":"285199530641-hgse3v9s82mvqd3sja5khnb0s6fkprgo.apps.googleusercontent.com","access_token":"ya29.GlzIBCcCAEpMvCW3uryImHoRWoSetuG_NOOy6ThQwRlBVXCL2ovHLRpnhalVg_Sw4mET7q2j7K8VHZESjEsdQ3MsrmoDAt9vSQsWvG2ePWu3TeaXX1miafLalnZ1Dg","refresh_token":"1/RSbnCmhp2WRsPsOLVQzOCoB62YOA2mKGJhFhuMwmsOz4Pl4TR6UtOaokwrobEwYb","scope":["https://www.googleapis.com/auth/drive.photos.readonly"],"expiration_time_millis":1505181213000}'
+default: '{"client_id":"285199530641-hgse3v9s82mvqd3sja5khnb0s6fkprgo.apps.googleusercontent.com","access_token":"ya29.Gl3zBNnDr59U-qqmL-uRpdexIT1rFZa30BgulEKC1xiov0ZA4X0UfYo3tk17uU1VbJukB1tXXx1BoWsm6aLacOBf1S3ZYFXi6r062nQtLkzvAjkZkNtU3as05Syhv10","refresh_token":"1/ur9RH57MLfjSBB0l3RGFXlyKiAXIrE3FUbNYY8wMOM4","scope":["https://www.googleapis.com/auth/drive.photos.readonly"],"expiration_time_millis":1505596873000}'
