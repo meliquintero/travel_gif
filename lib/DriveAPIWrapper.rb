@@ -43,7 +43,7 @@ class DriveAPIWrapper
     client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
     token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
     authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-    user_id = 'default'
+    user_id = 'melissajimison'
     credentials = authorizer.get_credentials(user_id)
 
     if credentials.nil?
@@ -65,8 +65,8 @@ class DriveAPIWrapper
     apiCall.client_options.application_name = APPLICATION_NAME
     apiCall.authorization = authorize
     # List the most recently modified GIF files.
-    response = apiCall.list_files(page_size: 6,
-                                  fields: 'nextPageToken, files(id, name, kind, mime_type)',
+    response = apiCall.list_files(page_size: 100,
+                                  fields: 'nextPageToken, files(id, name, kind, mime_type, thumbnailLink, webViewLink, webContentLink, createdTime, ownedByMe, size, imageMediaMetadata)',
                                   q: "mimeType='image/gif'",
                                   spaces: 'photos'
                                   )
@@ -75,12 +75,7 @@ class DriveAPIWrapper
 
     response.files.map do |aFile|
       puts ""
-      if aFile.image_media_metadata.location != nil
-        puts "Loc: #{aFile.image_media_metadata.location.latitude}, #{aFile.image_media_metadata.location.longitude}"
-      else
-        puts "Loc: 0, 0"
-      end
-      puts "aFile====> ", aFile
+      puts "aFile====> ", aFile.inspect
       self.new(aFile)
     end
   end
