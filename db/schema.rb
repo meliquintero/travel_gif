@@ -13,9 +13,24 @@
 
 ActiveRecord::Schema.define(version: 20170829201546) do
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "gifs", force: :cascade do |t|
+    t.string   "google_id"
+    t.string   "name"
+    t.string   "created_time"
+    t.string   "web_view_link"
+    t.string   "web_content_link"
+    t.string   "thumbnail_link"
+    t.string   "owned_by_me"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "size"
+    t.integer  "latitude"
+    t.integer  "longitude"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
 end
