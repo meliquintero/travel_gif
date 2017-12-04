@@ -17,7 +17,6 @@
 /tmp
 .env
 client_secret.json
-drive-ruby-chongo_project.yaml
 sample_rss.xml
 sample_rss_04.xml
 sample_rss_05.xml
