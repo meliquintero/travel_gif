@@ -79,7 +79,7 @@ class PopulateDataBase
     apiCall = Google::Apis::DriveV3::DriveService.new
     apiCall.client_options.application_name = APPLICATION_NAME
     apiCall.authorization = authorize
-    response = apiCall.list_files(page_size: 5,
+    response = apiCall.list_files(page_size: 100,
                                   fields: 'nextPageToken, files(id, name, kind, mime_type, thumbnailLink, webViewLink, webContentLink, createdTime, ownedByMe, size, imageMediaMetadata)',
                                   q: "mimeType='image/gif'",
                                   spaces: 'photos',

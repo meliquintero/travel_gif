@@ -18,5 +18,5 @@ test:
 production:
   <<: *default
   database: GifTravel_production
-  username: GifTravel
+  username: melissajimison
   password: <%= ENV['GIFTRAVEL_DATABASE_PASSWORD'] %>
