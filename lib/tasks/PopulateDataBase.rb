@@ -7,7 +7,7 @@ require 'fileutils'
 OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
 APPLICATION_NAME = 'Gif Travel'
 CLIENT_SECRETS_PATH = 'client_secret.json'
-CREDENTIALS_PATH = File.join(Dir.home, ENV["MY_CREDENTIALS_PATH"],
+CREDENTIALS_PATH = File.join(Dir.home, './',
                              "drive-ruby-chongo_project.yaml")
 # See: https://developers.google.com/identity/protocols/googlescopes
 SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_PHOTOS_READONLY
