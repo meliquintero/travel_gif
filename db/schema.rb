@@ -11,17 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829201546) do
+ActiveRecord::Schema.define(version: 0) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
   create_table "gifs", force: :cascade do |t|
-    t.string   "google_id"
+    t.string   "google_id",        null: false
     t.string   "name"
-    t.string   "created_time"
+    t.datetime "created_time"
     t.string   "web_view_link"
-    t.string   "web_content_link"
+    t.string   "web_content_link", null: false
     t.string   "thumbnail_link"
     t.string   "owned_by_me"
     t.integer  "width"
@@ -29,8 +28,8 @@ ActiveRecord::Schema.define(version: 20170829201546) do
     t.integer  "size"
     t.integer  "latitude"
     t.integer  "longitude"
+    t.string   "address"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
-
 end

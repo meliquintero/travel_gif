@@ -1,7 +1,15 @@
 <div class="row">
 <% @arrayOfGifs.each do |gif| %>
-  <div class="col-xs-6 col-md-3">
-    <%= link_to image_tag("https://drive.google.com/uc?export=view&id=#{gif.id}"), gif.download, class:"thumbnail" %>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= link_to image_tag("https://drive.google.com/uc?export=view&id=#{gif.google_id}"), gif.web_content_link, class:"thumbnail" %>
+      <div class="caption">
+        <h3><%=gif.name%></h3>
+        <p>Taken on <%=gif.created_time.strftime("%A, %d %b %Y")%></p>
+        <p>Location: <%=gif.address%></p>
+        <p><a href="<%=gif.web_content_link%>" class="btn btn-default" role="button">Download</a></p>
+      </div>
+    </div>
   </div>
 <% end %>
 </div>

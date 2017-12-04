@@ -9,7 +9,6 @@ APPLICATION_NAME = 'Gif Travel'
 CLIENT_SECRETS_PATH = 'client_secret.json'
 CREDENTIALS_PATH = File.join(Dir.home, ENV["MY_CREDENTIALS_PATH"],
                              "drive-ruby-chongo_project.yaml")
-# SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_METADATA_READONLY
 # See: https://developers.google.com/identity/protocols/googlescopes
 SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_PHOTOS_READONLY
 
@@ -18,31 +17,37 @@ SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_PHOTOS_READONLY
 # files or intitiating an OAuth2 authorization. If authorization is required,
 # the user's default browser will be launched to approve the request.
 #
+$next_page_token = ''
 class PopulateDataBase
   def self.create(aFile)
     puts "creating new Gif in db"
-    @gif = Gif.new
-    @gif.name = aFile.name
-    @gif.google_id = aFile.id
-    @gif.created_time = aFile.created_time
-    @gif.web_view_link = aFile.web_view_link
-    @gif.web_content_link = aFile.web_content_link
-    @gif.thumbnail_link = aFile.thumbnail_link
-    @gif.owned_by_me = aFile.owned_by_me
-    @gif.width = aFile.image_media_metadata.width
-    @gif.height = aFile.image_media_metadata.height
-    @gif.size = aFile.size
+    gif = Gif.new
+    gif.name = aFile.name
+    gif.google_id = aFile.id
+    gif.created_time = aFile.created_time
+    gif.web_view_link = aFile.web_view_link
+    gif.web_content_link = aFile.web_content_link
+    gif.thumbnail_link = aFile.thumbnail_link
+    gif.owned_by_me = aFile.owned_by_me
+    gif.width = aFile.image_media_metadata.width
+    gif.height = aFile.image_media_metadata.height
+    gif.size = aFile.size
     if aFile.image_media_metadata.location != nil
-      @gif.latitude = aFile.image_media_metadata.location.latitude
-      @gif.longitude = aFile.image_media_metadata.location.longitude
+      lat = aFile.image_media_metadata.location.latitude
+      lon = aFile.image_media_metadata.location.longitude
+      geo = Geocoder.search("#{lat},#{lon}").first.address
+      puts "geo=====>", geo
+      gif.address = geo
+      gif.latitude = lat
+      gif.longitude = lon
     end
 
-    @gif.save
+    gif.save
 
-    if @gif.save
-      puts "#{@gif.google_id} saved succesfully in DB"
+    if gif.save
+      puts "#{gif.google_id} saved succesfully in DB"
     else
-      puts "#{@gif.google_id} failed to be added in the data base"
+      puts "#{gif.google_id} failed to be added in the data base"
     end
 
   end
@@ -69,26 +74,36 @@ class PopulateDataBase
   end
 
 
-  def self.populate_db_1000
+  def self.populate_db_100
     # Initialize the API
     apiCall = Google::Apis::DriveV3::DriveService.new
     apiCall.client_options.application_name = APPLICATION_NAME
     apiCall.authorization = authorize
-    # List the most recently modified GIF files.
     response = apiCall.list_files(page_size: 5,
                                   fields: 'nextPageToken, files(id, name, kind, mime_type, thumbnailLink, webViewLink, webContentLink, createdTime, ownedByMe, size, imageMediaMetadata)',
                                   q: "mimeType='image/gif'",
-                                  spaces: 'photos'
+                                  spaces: 'photos',
+                                  order_by: 'createdTime',
+                                  page_token: $next_page_token
                                   )
 
     puts 'No files found' if response.files.empty?
-
+    $next_page_token = response.next_page_token
     response.files.map do |aFile|
-      puts "aFile====> ", aFile.inspect
-      @gif ||= Gif.find_by(google_id: aFile.id)
-      if @gif.nil?
-        @gif = self.create(aFile)
+      gif ||= Gif.find_by(google_id: aFile.id)
+      if gif.nil?
+        self.create(aFile)
+      else
+        puts "GIF is already in DB"
       end
     end
   end
+
+end
+
+scheduler = Rufus::Scheduler.new
+
+scheduler.every '1m' do
+  puts "TASK=====> Pupulating dataBase"
+  PopulateDataBase.populate_db_100
 end

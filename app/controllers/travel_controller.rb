@@ -1,9 +1,8 @@
-require "#{Rails.root}/lib/DriveAPIWrapper.rb"
+require "#{Rails.root}/lib/tasks/PopulateDataBase.rb"
 
 class TravelController < ApplicationController
   def index
-    @m = PopulateDataBase.populate_db_1000
-    @arrayOfGifs = Gif.last(5)
+    @arrayOfGifs = Gif.order('created_time ASC')
   end
 
 end
