@@ -103,7 +103,7 @@ end
 
 scheduler = Rufus::Scheduler.new
 
-scheduler.every '1m' do
+scheduler.every '2h' do
   puts "TASK=====> Pupulating dataBase"
   PopulateDataBase.populate_db_100
 end
