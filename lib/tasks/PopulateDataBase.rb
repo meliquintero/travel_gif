@@ -79,7 +79,7 @@ class PopulateDataBase
     apiCall = Google::Apis::DriveV3::DriveService.new
     apiCall.client_options.application_name = APPLICATION_NAME
     apiCall.authorization = authorize
-    response = apiCall.list_files(page_size: 100,
+    response = apiCall.list_files(page_size: 5,
                                   fields: 'nextPageToken, files(id, name, kind, mime_type, thumbnailLink, webViewLink, webContentLink, createdTime, ownedByMe, size, imageMediaMetadata)',
                                   q: "mimeType='image/gif'",
                                   spaces: 'photos',
@@ -103,7 +103,7 @@ end
 
 scheduler = Rufus::Scheduler.new
 
-scheduler.every '1d' do
+scheduler.every '1m' do
   puts "TASK=====> Pupulating dataBase"
   PopulateDataBase.populate_db_100
 end
