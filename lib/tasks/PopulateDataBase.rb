@@ -35,11 +35,15 @@ class PopulateDataBase
     if aFile.image_media_metadata.location != nil
       lat = aFile.image_media_metadata.location.latitude
       lon = aFile.image_media_metadata.location.longitude
-      geo = Geocoder.search("#{lat},#{lon}").first.address
-      puts "geo=====>", geo
-      gif.address = geo
       gif.latitude = lat
       gif.longitude = lon
+      geo = Geocoder.search("#{lat},#{lon}")
+      puts "geo1=====>", geo
+      if geo.first.address
+        geo = geo.first.address
+      end
+      puts "geo2=====>", geo
+      gif.address = geo
     end
 
     gif.save
@@ -79,7 +83,7 @@ class PopulateDataBase
     apiCall = Google::Apis::DriveV3::DriveService.new
     apiCall.client_options.application_name = APPLICATION_NAME
     apiCall.authorization = authorize
-    response = apiCall.list_files(page_size: 5,
+    response = apiCall.list_files(page_size: 25,
                                   fields: 'nextPageToken, files(id, name, kind, mime_type, thumbnailLink, webViewLink, webContentLink, createdTime, ownedByMe, size, imageMediaMetadata)',
                                   q: "mimeType='image/gif'",
                                   spaces: 'photos',
@@ -103,7 +107,7 @@ end
 
 scheduler = Rufus::Scheduler.new
 
-scheduler.every '2h' do
+scheduler.every '1d' do
   puts "TASK=====> Pupulating dataBase"
   PopulateDataBase.populate_db_100
 end
