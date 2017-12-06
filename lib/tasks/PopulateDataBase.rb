@@ -19,7 +19,7 @@ SCOPE = Google::Apis::DriveV3::AUTH_DRIVE_PHOTOS_READONLY
 #
 $next_page_token = ''
 class PopulateDataBase
-  def self.create(aFile)
+  def self.createInDB(aFile)
     puts "creating new Gif in db"
     gif = Gif.new
     gif.name = aFile.name
@@ -41,6 +41,7 @@ class PopulateDataBase
       puts "geo1=====>", geo
       if geo.first.address
         geo = geo.first.address
+        #city and country
       end
       puts "geo2=====>", geo
       gif.address = geo
@@ -96,7 +97,7 @@ class PopulateDataBase
     response.files.map do |aFile|
       gif ||= Gif.find_by(google_id: aFile.id)
       if gif.nil?
-        self.create(aFile)
+        self.createInDB(aFile)
       else
         puts "GIF is already in DB"
       end
